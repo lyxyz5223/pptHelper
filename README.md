@@ -188,7 +188,7 @@ Image:
 
 [![](https://t.mwm.moe/fj)](https://space.bilibili.com/3546627386116187 "来bilibili关注我吧！")
 
-> 图为：李健首张专辑《似水流年》封面
+> 来bilibili关注我吧！！
                 
 ----
 
