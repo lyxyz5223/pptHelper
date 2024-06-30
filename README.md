@@ -1,3 +1,5 @@
+![](https://github.com/lyxyz5223/pptHelper/blob/master/pptHelper.png)
+
 #关于pptHelper
 - ##**欢迎使用！ **
 
@@ -23,7 +25,7 @@
 ## Editor.md
 ### Editor.md
 
-![](https://github.com/lyxyz5223/pptHelper/blob/master/pptHelper.ico)
+![](https://github.com/lyxyz5223/pptHelper/blob/master/pptHelper.png)
 
 ![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![](https://img.shields.io/github/forks/pandao/editor.md.svg) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg) ![](https://img.shields.io/github/issues/pandao/editor.md.svg) ![](https://img.shields.io/bower/v/editor.md.svg)
 
