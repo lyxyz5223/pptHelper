@@ -1,0 +1,29 @@
+<RCC>
+  <qresource prefix="/pptHelper">
+    <file>res/qt_zh_CN1.qm</file>
+  </qresource>
+  <qresource prefix="/svg">
+    <file>svgs/填充画笔.svg</file>
+    <file>svgs/arrow-back-outline.svg</file>
+    <file>svgs/arrow-down-outline.svg</file>
+    <file>svgs/solar--eraser-bold-duotone.svg</file>
+    <file>svgs/arrow-downward-outline.svg</file>
+    <file>svgs/arrow-forward-outline.svg</file>
+    <file>svgs/arrow-ios-back-outline.svg</file>
+    <file>svgs/arrow-ios-downward-outline.svg</file>
+    <file>svgs/arrow-ios-forward-outline.svg</file>
+    <file>svgs/arrow-ios-upward-outline.svg</file>
+    <file>svgs/arrow-left-outline.svg</file>
+    <file>svgs/arrow-right-outline.svg</file>
+    <file>svgs/arrow-up-outline.svg</file>
+    <file>svgs/arrow-upward-outline.svg</file>
+    <file>svgs/brush-outline.svg</file>
+    <file>svgs/close-circle-outline.svg</file>
+    <file>svgs/close-outline.svg</file>
+    <file>svgs/edit-2-outline.svg</file>
+    <file>svgs/basil--cursor-outline.svg</file>
+    <file>svgs/edit-outline.svg</file>
+    <file>svgs/search.svg</file>
+    <file>svgs/square-outline.svg</file>
+  </qresource>
+</RCC>

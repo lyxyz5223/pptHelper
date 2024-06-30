@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>pptHelperClass</class>
+ <widget class="QMainWindow" name="pptHelperClass">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>540</width>
+    <height>360</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>pptHelper</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow &gt; #toolBarBottom{
+alignment: center;
+}</string>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::TabShape::Rounded</enum>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="turnPageToolBarLeft" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>75</y>
+      <width>41</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QWidget{
+
+
+
+}
+QWidget &gt; QPushButton{
+border: 1px solid grey;
+background-color: rgba(244, 255, 220, 100);
+border-radius: 7px;
+}
+
+QWidget &gt; QPushButton:focus{
+outline : none;
+}</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="PreviousOne_1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/arrow-up-outline.svg</normaloff>:/svg/svgs/arrow-up-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SelectPage_1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/square-outline.svg</normaloff>:/svg/svgs/square-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="NextOne_1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/arrow-down-outline.svg</normaloff>:/svg/svgs/arrow-down-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="turnPageToolBarRight" native="true">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>90</y>
+      <width>41</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QWidget{
+
+
+
+}
+QWidget &gt; QPushButton{
+border: 1px solid grey;
+background-color: rgba(244, 255, 220, 100);
+border-radius: 7px;
+}
+QWidget &gt; QPushButton:focus{
+outline : none;
+}</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="PreviousOne_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/arrow-up-outline.svg</normaloff>:/svg/svgs/arrow-up-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SelectPage_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/square-outline.svg</normaloff>:/svg/svgs/square-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="NextOne_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/arrow-down-outline.svg</normaloff>:/svg/svgs/arrow-down-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="turnPageToolBarLeftBottom" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>315</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QWidget{
+
+
+
+}
+QWidget &gt; QPushButton{
+border: 1px solid grey;
+background-color: rgba(244, 255, 220, 100);
+border-radius: 7px;
+}
+QWidget &gt; QPushButton:focus{
+outline : none;
+}</string>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="PreviousOne_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/arrow-left-outline.svg</normaloff>:/svg/svgs/arrow-left-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SelectPage_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/square-outline.svg</normaloff>:/svg/svgs/square-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="NextOne_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/arrow-right-outline.svg</normaloff>:/svg/svgs/arrow-right-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="toolBarBottom" native="true">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>315</y>
+      <width>186</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QWidget{
+border: 1px solid grey;
+border-radius: 7px;
+background-color: rgba(244, 255, 220, 100);
+}
+
+QWidget &gt; QPushButton{
+background-color:transparent;
+}
+QWidget &gt; QPushButton:focus{
+outline : none;
+}
+QWidget &gt; QPushButton:pressed{
+border:2px solid red;
+border-radius: 7px;
+background-color: rgba(226, 140, 255, 150)
+}
+</string>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>3</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="pointer">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/basil--cursor-outline.svg</normaloff>:/svg/svgs/basil--cursor-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="DoubleClickButton" name="pen">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="eraser">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/solar--eraser-bold-duotone.svg</normaloff>:/svg/svgs/solar--eraser-bold-duotone.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bigger">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/search.svg</normaloff>:/svg/svgs/search.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="QuitSlideShowWindow">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/close-outline.svg</normaloff>:/svg/svgs/close-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="turnPageToolBarRightBottom" native="true">
+    <property name="geometry">
+     <rect>
+      <x>417</x>
+      <y>315</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QWidget{
+
+
+
+}
+QWidget &gt; QPushButton{
+border: 1px solid grey;
+background-color: rgba(244, 255, 220, 100);
+border-radius: 7px;
+}
+QWidget &gt; QPushButton:focus{
+outline : none;
+}</string>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="PreviousOne_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/arrow-left-outline.svg</normaloff>:/svg/svgs/arrow-left-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SelectPage_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/square-outline.svg</normaloff>:/svg/svgs/square-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="NextOne_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="pptHelper.qrc">
+         <normaloff>:/svg/svgs/arrow-right-outline.svg</normaloff>:/svg/svgs/arrow-right-outline.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>DoubleClickButton</class>
+   <extends>QPushButton</extends>
+   <header>doubleclickbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="pptHelper.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>PreviousOne_1</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>previousPage1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>16</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>70</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NextOne_1</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>nextPage1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>13</x>
+     <y>175</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>109</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PreviousOne_2</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>previousPage1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>531</x>
+     <y>108</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>412</x>
+     <y>117</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NextOne_2</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>nextPage1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>521</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PreviousOne_3</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>previousPage1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>22</x>
+     <y>340</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>25</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NextOne_3</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>nextPage1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>68</x>
+     <y>273</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PreviousOne_4</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>previousPage1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>432</x>
+     <y>323</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NextOne_4</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>nextPage1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>506</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>396</x>
+     <y>215</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>QuitSlideShowWindow</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>quitSlideShowWindow1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>339</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>403</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bigger</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>setMagnifier()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>303</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>73</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eraser</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>setEraser1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>33</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pen</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>setPen1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>230</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pointer</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>setPointer1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>133</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SelectPage_3</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>setNavigation1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>332</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>127</x>
+     <y>252</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SelectPage_1</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>setNavigation1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>21</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>135</x>
+     <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SelectPage_2</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>setNavigation1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>154</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>479</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SelectPage_4</sender>
+   <signal>clicked()</signal>
+   <receiver>pptHelperClass</receiver>
+   <slot>setNavigation1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>468</x>
+     <y>327</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>466</x>
+     <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>nextPage1()</slot>
+  <slot>setPen1()</slot>
+  <slot>setEraser1()</slot>
+  <slot>quitSlideShowWindow1()</slot>
+  <slot>setMagnifier()</slot>
+  <slot>setPointer1()</slot>
+  <slot>previousPage1()</slot>
+  <slot>setNavigation1()</slot>
+ </slots>
+</ui>
