@@ -22,6 +22,7 @@ long pptHWND, pptAppHWND;
 
 QPropertyAnimation* HideAni;
 QPropertyAnimation* ShowAni;
+#include "LicenseAndPolicyDialogClass.h"
 
 pptHelper::pptHelper(QWidget* parent)
     : QMainWindow(parent)
@@ -31,9 +32,51 @@ pptHelper::pptHelper(QWidget* parent)
     this->setWindowFlags(this->windowFlags()|Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint/*|Qt::Tool*/);
     this->setAttribute(Qt::WA_TranslucentBackground, true);//窗体背景全透明
     //setWindowOpacity(0.5);//主窗体及其所有的子控件整体半透明
-
+    this->setWindowIcon(QIcon(":/pptHelper/pptHelper.ico"));
     QScreen* MyScreen = this->screen();
     screenRect = MyScreen->geometry();
+
+    std::string InConfigTxtStr;
+    QFileInfo InConfigTxtInfo("config.ini");
+    if (InConfigTxtInfo.isFile())
+    {
+        std::ifstream InConfigTxt("config.ini");
+        if (!InConfigTxt.is_open())
+        {
+            QMessageBox::critical(this, "错误", "ERROR!\n配置文件读取失败！");
+        }
+        std::getline(InConfigTxt, InConfigTxtStr);
+        InConfigTxt.close();
+    }
+    if(InConfigTxtStr != "NotFirstRun")
+    {
+        //软件许可协议弹窗
+        LicenseAndPolicyDialogClass* licenseBox = new LicenseAndPolicyDialogClass(this);
+        licenseBox->resize(screenRect.width() * 3 / 5, screenRect.height() * 3 / 5);
+        switch (licenseBox->exec())
+        {
+        case 1://Yes
+        {
+            std::ofstream configTxt;
+            configTxt.open("config.ini", std::ofstream::out);
+            if (!configTxt.is_open())
+            {
+                QMessageBox::critical(this, "错误", "ERROR!\n配置文件读取写入失败！");
+                exit(1);
+
+            }
+            else {
+                configTxt << "NotFirstRun";
+            }
+            configTxt.close();
+        }
+        break;
+        case 0://No or Close
+            exit(0);
+        default:
+            break;
+        }
+    }
     ShowAni = new QPropertyAnimation(this);
     ShowAni->setTargetObject(this);
     ShowAni->setPropertyName("windowOpacity");

@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>pptHelper</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pptHelper.qrc">
+    <normaloff>:/pptHelper/pptHelper.ico</normaloff>:/pptHelper/pptHelper.ico</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow &gt; #toolBarBottom{
 alignment: center;

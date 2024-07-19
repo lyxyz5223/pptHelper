@@ -17,6 +17,8 @@
 #include <qsvgrenderer.h>
 #include <qlabel.h>
 #include <qpropertyanimation.h>
+#include <qfileinfo.h>
+
 
 //Visual C++
 #import "C:\\Program Files\\Microsoft Office\\Root\\VFS\\ProgramFilesCommonX64\\Microsoft Shared\\OFFICE16\\MSO.DLL"
@@ -27,6 +29,7 @@
 #include <iostream>
 #include <thread>
 #include <string>
+#include <fstream>
 
 void ClickBtnsProc(int mode);
 void getWind();

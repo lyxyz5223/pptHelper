@@ -37,12 +37,12 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.7.1_msvc2019_64</QtInstall>
+    <QtInstall>6.7.2_msvc2019_64</QtInstall>
     <QtModules>core;gui;widgets;svg</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.7.1_msvc2019_64</QtInstall>
+    <QtInstall>6.7.2_msvc2019_64</QtInstall>
     <QtModules>core;gui;widgets;svg</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
@@ -90,11 +90,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="pptHelper.qrc" />
+    <QtUic Include="LicenseAndPolicyDialogClass.ui" />
     <QtUic Include="pptHelper.ui" />
     <QtMoc Include="pptHelper.h" />
     <ClCompile Include="Bt.cpp" />
     <ClCompile Include="BtBox.cpp" />
     <ClCompile Include="DoubleClickButton.cpp" />
+    <ClCompile Include="LicenseAndPolicyDialogClass.cpp" />
     <ClCompile Include="pptHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <None Include="pptHelper.ico" />
@@ -103,6 +105,7 @@
     <ClInclude Include="Bt.h" />
     <ClInclude Include="BtBox.h" />
     <ClInclude Include="DoubleClickButton.h" />
+    <QtMoc Include="LicenseAndPolicyDialogClass.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
