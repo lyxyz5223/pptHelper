@@ -1,7 +1,7 @@
 ![](https://github.com/lyxyz5223/pptHelper/blob/master/pptHelper.png)
 
-#关于pptHelper
-- ##**欢迎使用！ **
+### *关于pptHelper*
+- ## ** 欢迎使用！ **
 
 - pptHelper 使用C++,Win32,Qt共同完成， 只为老师同学使用更加方便
 
@@ -11,11 +11,13 @@
 
 - To contact me,please email at 1620682458@qq.com
 
+- **平中**帝国无限公司
+
 - Thank you!
 
 - 请遵循LGPL v3许可证
 
-#关于此md说明文件
+# 关于此md说明文件
 作者大大不会写也懒得写了。。。。。。。。。
 就这样吧
 下列内容留着参考
