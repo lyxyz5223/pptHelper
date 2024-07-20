@@ -9,7 +9,7 @@
 
 - 目前作者大大对于软件的开发可能会比较慢， 但作者不会停止维护， 欢迎提出问题和建议！
 
-- To contact me,please email at 1620682458@qq.com
+- To contact me,please email at lyxyz5223@qq.com
 
 - **平中**帝国无限公司
 
