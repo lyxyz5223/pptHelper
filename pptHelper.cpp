@@ -308,6 +308,7 @@ void getWind()
                 CComPtr<IUnknown> iunknown1;
                 hr = GetActiveObject(__uuidof(PowerPoint::Application), NULL, &iunknown1);
                 pPowerPointApp = iunknown1;
+                Sleep(100);
             } while (pPowerPointApp == NULL);
             pPowerPointApp->ActivePresentation;
             //long pptHWND;
