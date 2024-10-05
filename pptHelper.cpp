@@ -104,6 +104,7 @@ pptHelper::pptHelper(QWidget* parent)
     GetPptSlideShowStateTimer->start(100);
     //this->showMinimized();
     //this->hide();//怎么这条没用？？？？？？
+    show();//手动显示窗口，getWind函数就不用先等待500ms再隐藏窗口
 }
 
 pptHelper::~pptHelper()
@@ -158,7 +159,8 @@ void pptHelper::paintEvent(QPaintEvent* e)
     //QSize btsize(screenRect.height() / 20, screenRect.height() / 20);//相对屏幕大小计算
     QSize WidgetSize(this->height() / 20, this->height() / 20);//相对窗口大小计算
     ui.toolBarBottom->resize(WidgetSize.height()*5, WidgetSize.height());
-    ui.toolBarBottom->move((this->width() - ui.toolBarBottom->width())/2,this->height()-ui.toolBarBottom->height());
+    //ui.toolBarBottom->move((this->width() - ui.toolBarBottom->width()) / 2, this->height() - ui.toolBarBottom->height());//底部工具栏居中处理
+    ui.toolBarBottom->move((this->width() - ui.toolBarBottom->width()) / 4, this->height() - ui.toolBarBottom->height());//底部工具栏置于屏幕左侧1/4处
 
     ui.turnPageToolBarLeft->resize(WidgetSize.height(), WidgetSize.height() * 3);
     ui.turnPageToolBarRight->resize(WidgetSize.height(), WidgetSize.height() * 3);
@@ -288,7 +290,7 @@ void getWind()
     HWND lastPptShowWindow = NULL;
     //MoveWindow(thisApp, 0, 0, 0, 0, 0);
     //ShowWindow(thisApp, SW_MINIMIZE);
-    Sleep(500);
+    //Sleep(500);
     PostMessage(thisApp, 0x9876, 9876, 1000);
 
     //ShowWindow(thisApp, SW_HIDE);
