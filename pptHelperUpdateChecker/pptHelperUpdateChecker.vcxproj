@@ -100,11 +100,14 @@
     <ClCompile Include="main.cpp" />
     <None Include="1.json" />
     <None Include="pptHelperUpdateChecker.ico" />
-    <ResourceCompile Include="pptHelperUpdateChecker.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="jsoncpp\json\json-forwards.h" />
     <ClInclude Include="jsoncpp\json\json.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pptHelperUpdateChecker.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

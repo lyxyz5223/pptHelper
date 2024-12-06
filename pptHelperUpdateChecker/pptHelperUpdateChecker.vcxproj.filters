@@ -38,9 +38,6 @@
     <None Include="pptHelperUpdateChecker.ico">
       <Filter>Resource Files</Filter>
     </None>
-    <ResourceCompile Include="pptHelperUpdateChecker.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -57,8 +54,16 @@
     <ClInclude Include="jsoncpp\json\json-forwards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="1.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pptHelperUpdateChecker.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

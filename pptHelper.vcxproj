@@ -63,6 +63,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
@@ -72,7 +73,7 @@
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -89,6 +90,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LabelButton.cpp" />
+    <ClCompile Include="stringProcess.cpp" />
+    <ClCompile Include="toolBar.cpp" />
     <QtRcc Include="pptHelper.qrc" />
     <QtUic Include="LicenseAndPolicyDialogClass.ui" />
     <QtUic Include="pptHelper.ui" />
@@ -105,6 +109,9 @@
     <ClInclude Include="Bt.h" />
     <ClInclude Include="BtBox.h" />
     <ClInclude Include="DoubleClickButton.h" />
+    <QtMoc Include="LabelButton.h" />
+    <ClInclude Include="stringProcess.h" />
+    <ClInclude Include="toolBar.h" />
     <QtMoc Include="LicenseAndPolicyDialogClass.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

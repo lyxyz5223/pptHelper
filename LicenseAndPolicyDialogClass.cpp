@@ -21,7 +21,7 @@ void LicenseAndPolicyDialogClass::TimeCountDownProc()
 {
 	if (TimeLeft > 0)
 	{
-		ui.AgreeButton->setText(AgreeBtnText + QString::fromLocal8Bit("(") + QString::fromStdString(std::to_string(TimeLeft)) + QString::fromLocal8Bit("Ãë)"));
+		ui.AgreeButton->setText(AgreeBtnText + QString::fromLocal8Bit("(") + QString::fromStdString(std::to_string(TimeLeft)) + QString::fromLocal8Bit("ç§’)"));
 		TimeLeft--;
 
 	}

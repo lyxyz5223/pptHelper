@@ -29,7 +29,6 @@ void DoubleClickButton::mouseReleaseEvent(QMouseEvent* e)
 {
     QPushButton::mouseReleaseEvent(e);
 }
-QColor lastPenColor;
 void DoubleClickButton::paintEvent(QPaintEvent* e)
 {
     QPushButton::paintEvent(e);
@@ -41,14 +40,15 @@ void DoubleClickButton::paintEvent(QPaintEvent* e)
     QSvgRenderer penIconRenderer;
     QString ColorHex = iconColor.name();
     penIconStr.replace(QRE, "fill=\"" + ColorHex + "\"");
-    QSize penBtnIconSize(this->size().height() * 3 / 5, this->size().height() * 3 / 5);//相对按钮的图标大小
     penIconRenderer.load(penIconStr.toLocal8Bit());
     penIconPainter.setRenderHint(QPainter::Antialiasing);
-    QRect thisBtnIconR = this->rect();
-    thisBtnIconR.setSize(penBtnIconSize);
-    penIconPainter.translate(size().width() / 5, size().height() / 5);
+    QSize size = QSize(width() > height() ? height(), height() : width(), width());
+    size = QSize(height(), height());
+    QSize penBtnIconSize(size.height() * 3 / 5, size.height() * 3 / 5);//相对按钮的图标大小
+    QPoint penBtnIconPos(QPoint((this->size().width() - penBtnIconSize.width()) / 2, (this->size().height() - penBtnIconSize.height()) / 2));
+    QRect thisBtnIconR(penBtnIconPos, penBtnIconSize);
     penIconRenderer.render(&penIconPainter, thisBtnIconR);
-    //penIconPainter.fillRect(this->rect(), iconColor);    }
+    //penIconPainter.fillRect(this->rect(), iconColor);
 }
 
 //QColor DoubleClickButton::getPointerColor()

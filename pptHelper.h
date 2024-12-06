@@ -30,10 +30,9 @@
 #include <thread>
 #include <string>
 #include <fstream>
-
+#include "stringProcess.h"
 void ClickBtnsProc(int mode);
 void getWind();
-
 enum ClickBtnsMode
 {
     Pointer,
@@ -54,14 +53,14 @@ class pptHelper : public QMainWindow
 public:
     pptHelper(QWidget *parent = nullptr);
     ~pptHelper();
-    bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
 
 protected:
     void paintEvent(QPaintEvent* e);
-
+    bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
 private:
     Ui::pptHelperClass ui;
-
+    std::vector<std::vector<std::string>> Config;
+    void moveBars();
 public slots:
     void setPointer1();
     void setPen1();
@@ -74,6 +73,7 @@ public slots:
     void setPageNumAndPointerColor();
     void dcCheckProc();
     void getPptSlideShowState();
+    void foldMenu();
 };
 
 
@@ -103,9 +103,9 @@ public:
         return S_OK;
     }
 
-    ULONG STDMETHODCALLTYPE AddRef(void) { return S_OK; }
+    ULONG STDMETHODCALLTYPE AddRef(void) { ref++; return S_OK; }
 
-    ULONG STDMETHODCALLTYPE Release(void) { return S_OK; }
+    ULONG STDMETHODCALLTYPE Release(void) { ref = 0; return S_OK; }
     HRESULT STDMETHODCALLTYPE GetIDsOfNames(
         /* [in] */ __RPC__in REFIID riid,
         /* [size_is][in] */ __RPC__in_ecount_full(cNames) LPOLESTR* rgszNames,
@@ -146,7 +146,7 @@ public:
 
 
 private:
-
+    unsigned long long ref = 0;
 };
 
 /*

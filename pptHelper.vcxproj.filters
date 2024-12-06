@@ -55,6 +55,15 @@
     <ClCompile Include="LicenseAndPolicyDialogClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="stringProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="toolBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LabelButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bt.h">
@@ -67,6 +76,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stringProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="toolBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -82,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="LicenseAndPolicyDialogClass.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="LabelButton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
