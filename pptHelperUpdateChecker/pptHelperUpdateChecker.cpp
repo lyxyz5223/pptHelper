@@ -74,6 +74,24 @@ pptHelperUpdateChecker::pptHelperUpdateChecker(QWidget *parent)
     string tag_name = root["tag_name"].asString();//UTF8文本
     if(tag_name.size())
         tag_name.erase(tag_name.begin());
+    /*
+        string body = root["body"].asString();//UTF8文本
+    string qtVersionTag = "QtVersion:";
+    string qtVersionText;
+    string::size_type st = body.find(qtVersionTag);
+    if (st != string::npos)
+        qtVersionText = body.substr(st + qtVersionTag.size());
+    else
+        RunAndExit(10);
+    for (size_t i = 0; i < qtVersionText.size(); i++)
+    {
+        if (qtVersionText[i] != '.' && !isdigit(qtVersionText[i]))
+        {
+            qtVersionText = qtVersionText.substr(0, i);
+            break;
+        }
+    }
+    */
 #ifdef _DEBUG
     MessageBox((HWND)winId(), str2wstr(tag_name).c_str(), L"最新版本号", 0);
 #else
@@ -120,10 +138,7 @@ pptHelperUpdateChecker::pptHelperUpdateChecker(QWidget *parent)
     else
         RunAndExit(8);
     MoveFileEx(L"newVersion.exe", filenameW, MOVEFILE_REPLACE_EXISTING);
-
-
     RunAndExit(0);
-
 }
 
 pptHelperUpdateChecker::~pptHelperUpdateChecker()
