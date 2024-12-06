@@ -1,15 +1,31 @@
 #include "pptHelperUpdateChecker.h"
-
+#include "stringProcess.h"
 const char* filenameA = "pptHelper.exe";
 const wchar_t* filenameW = L"pptHelper.exe";
-
+int versionCmp(string ver1, string ver2)
+{
+    int res = 0;
+    vector<string> v1 = split(ver1, ".");
+    vector<string> v2 = split(ver2, ".");
+    size_t lt = (v1.size() > v2.size() ? v2.size() : v1.size());
+    for (size_t i = 0; i < lt; i++)
+    {
+        long long v1ll = stoll(v1[i]);
+        long long v2ll = stoll(v2[i]);
+        if (v1ll != v2ll)
+            res = (v1ll > v2ll ? 1 : -1);
+    }
+    if (res == 0 && v1.size() != v2.size())
+        res = (v1.size() > v2.size() ? 1 : -1);
+    return res;
+}
 
 pptHelperUpdateChecker::pptHelperUpdateChecker(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
     //CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-    wstring exitingFileInfo = L"v";
+    wstring exitingFileInfo = L"";
     exitingFileInfo += GetFileProductVersion(filenameW);
 #ifdef _DEBUG
     MessageBox((HWND)winId(), exitingFileInfo.c_str(), L"当前版本号", 0);
@@ -55,14 +71,15 @@ pptHelperUpdateChecker::pptHelperUpdateChecker(QWidget *parent)
     bool isOK = Json::parseFromStream(jsReaderBuilder, inJson, &root, &StrError);
     if (!isOK)
         RunAndExit(5);
-    string tag_name = root["tag_name"].asString();
-    tag_name = UTF8ToGBK(tag_name.c_str());
+    string tag_name = root["tag_name"].asString();//UTF8文本
+    if(tag_name.size())
+        tag_name.erase(tag_name.begin());
 #ifdef _DEBUG
     MessageBox((HWND)winId(), str2wstr(tag_name).c_str(), L"最新版本号", 0);
 #else
 #endif // DEBUG
     inJson.close();
-    if (wcscmp(exitingFileInfo.c_str(), str2wstr(tag_name).c_str()) >= 0)
+    if (versionCmp(wstr2str_2UTF8(exitingFileInfo), tag_name) >= 0)
         RunAndExit(9);
     string download_link = "https://github.com/lyxyz5223/pptHelper/releases/download/";
     download_link += tag_name;

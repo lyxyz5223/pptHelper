@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="stringProcess.cpp" />
     <QtRcc Include="pptHelperUpdateChecker.qrc" />
     <QtUic Include="pptHelperUpdateChecker.ui" />
     <QtMoc Include="pptHelperUpdateChecker.h" />
@@ -105,6 +106,7 @@
     <ClInclude Include="jsoncpp\json\json-forwards.h" />
     <ClInclude Include="jsoncpp\json\json.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="stringProcess.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="pptHelperUpdateChecker.rc" />
