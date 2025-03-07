@@ -168,9 +168,9 @@ private:
     QTimer* GetPptSlideShowStateTimer;
 
     QRect screenRect;
-    HWND thisApp;//Õâ¸öÓ¦ÓÃ³ÌĞòµÄ´°¿Ú¾ä±ú
-    HWND ColorDialog1 = NULL;//»­±ÊÑÕÉ«¶Ô»°¿ò¾ä±ú
-    bool dbclick[2] = { false,false };//½öÊ¹ÓÃdbclick[0]£¬dbclick[1]Ôİ²»Ê¹ÓÃ
+    HWND thisApp;//å½“å‰åº”ç”¨ç¨‹åºçª—å£çš„å®ä¾‹å¥æŸ„
+    HWND ColorDialog1 = NULL;//ç”»ç¬”é€‰æ‹©çª—å£çš„å¥æŸ„
+    bool dbclick[2] = { false,false };//ç›®å‰ä»…ä½¿ç”¨dbclick[0]è€Œdbclick[1]æš‚ä¸ä½¿ç”¨
     QColor PointerColor1;//
     QColor PointerColor2;
 
