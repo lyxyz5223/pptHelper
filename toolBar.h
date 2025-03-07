@@ -42,6 +42,12 @@ public:
 	QSize getAniEndSize() const {
 		return aniEndSize;
 	}
+	int width() {
+		return geometryRect.width();
+	}
+	int height() {
+		return geometryRect.height();
+	}
 	QSize size() const {
 		return aniEndSize;
 	}

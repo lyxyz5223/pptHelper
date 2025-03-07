@@ -4,27 +4,15 @@ using namespace PowerPoint;
 
 
 
-QRect screenRect;
-bool comInitialProc();
-HWND thisApp;//这个软件的窗口HWND
-HWND ColorDialog1 = NULL;
-bool dbclick[2] = { false,false };//检测是否双击按钮，dbclick[0]有用，dbclick[1]无用
-QColor PointerColor1;//设置的画笔颜色
-QColor PointerColor2;
 
-EA eaSink;
-DWORD dw;
-HRESULT hr;
-int pptShowPosition = -1;
-int pptShowTotalNum = -1;
-QTimer* GetPptSlideShowStateTimer;
-long pptHWND, pptAppHWND;
-
-QPropertyAnimation* HideAni;
-QPropertyAnimation* ShowAni;
 #include "LicenseAndPolicyDialogClass.h"
-bool RectEqual(RECT r1, RECT r2) {
+bool IsRectEqual(RECT r1, RECT r2) {
 	if (r1.left != r2.left || r1.right != r2.right || r1.top != r2.top || r1.bottom != r2.bottom)
+		return false;
+	return true;
+}
+bool IsRectApproximatelyEqual(RECT r1, RECT r2, int tolerance = 1) {
+	if (abs(r1.left - r2.left) > tolerance || abs(r1.right - r2.right) > tolerance || abs(r1.top - r2.top) > tolerance || abs(r1.bottom - r2.bottom) > tolerance)
 		return false;
 	return true;
 }
@@ -82,6 +70,8 @@ pptHelper::pptHelper(QWidget* parent)
 			break;
 		}
 	}
+
+
 	std::fstream fs("config.ini", std::ios::in);
 	if (fs.is_open())
 	{
@@ -113,7 +103,7 @@ pptHelper::pptHelper(QWidget* parent)
 
 
 	connect(HideAni, SIGNAL(finished()), this, SLOT(hide()));
-	std::thread PPTDialog(comInitialProc);
+	std::thread PPTDialog(&pptHelper::comInitialProc, this);
 	PPTDialog.detach();
 	QTimer* setPageNumTimer;
 	setPageNumTimer = new QTimer(this);
@@ -195,6 +185,8 @@ bool pptHelper::nativeEvent(const QByteArray& eventType, void* message, qintptr*
 			//MessageBox(0, "", "", 0);
 			if (msg->wParam == 9876)//隐藏
 			{
+				if (magnifier)
+					magnifier->hide();
 				ShowAni->stop();
 				HideAni->setStartValue(ShowAni->currentValue());
 				HideAni->setDuration(msg->lParam);
@@ -204,8 +196,10 @@ bool pptHelper::nativeEvent(const QByteArray& eventType, void* message, qintptr*
 			break;
 		case 0x6789:
 			//MessageBox(0, "", "", 0);
-			if (msg->wParam == 6789)
+			if (msg->wParam == 6789)//显示
 			{
+				if (magnifier)
+					magnifier->show();
 				HideAni->stop();
 				ShowAni->setStartValue(HideAni->currentValue());
 				show();
@@ -313,7 +307,7 @@ HRESULT EA::SlideShowBegin(SlideShowWindow* Wn)
 {
 	return S_OK;
 }
-bool comInitialProc()
+bool pptHelper::comInitialProc()
 {
 	//HRESULT hr = CoInitialize(NULL);
 	hr = CoInitializeEx(0, COINIT_MULTITHREADED);
@@ -321,7 +315,7 @@ bool comInitialProc()
 	if (SUCCEEDED(hr))
 	{
 		
-		std::thread getPptWindthread(getWind);
+		std::thread getPptWindthread(&pptHelper::getWind, this);
 		getPptWindthread.detach();
 		//initThread1->start();
 
@@ -337,7 +331,7 @@ bool comInitialProc()
 	return true;
 
 }
-void getWind()
+void pptHelper::getWind()
 {
 	//hr = pPowerPointApp.CoCreateInstance(__uuidof(Application));
 	//std::string spath;// = "C:\\Users\\seewo\\Desktop\\数学\\早测\\1月11号.pptx";
@@ -438,20 +432,38 @@ void getWind()
 			{
 				//OutputDebugString(L"Visible");
 				RECT pptRect = { 0,0,0,0 };
+				RECT thisWindowRect = { 0,0,0,0 };
 				if (pptHWND != NULL)//句柄有效才获取ppt放映窗口Rect
 				{
 					GetWindowRect((HWND)pptHWND, &pptRect);//获取ppt放映窗口Rect
+					GetClientRect((HWND)pptHWND, &pptRect);//获取ppt放映窗口Rect
+					POINT pos = { 0 };
+					ClientToScreen((HWND)pptHWND, &pos);//转换为屏幕坐标
+					pptRect.left = pos.x;
+					pptRect.top = pos.y;
+					pptRect.right += pos.x;
+					pptRect.bottom += pos.y;
+					GetWindowRect((HWND)thisApp, &thisWindowRect);//获取主窗口Rect
 					if (pPowerPointApp->WindowState != PowerPoint::ppWindowMinimized)
 					{
 						qDebug() << "WindowState-Normal";
-						if (!RectEqual(lastPptShowWindowRect, pptRect))
+						//if (!RectEqual(lastPptShowWindowRect, pptRect))
+						if (!IsRectApproximatelyEqual(thisWindowRect, pptRect, 2))
 						{
 							lastPptShowWindowRect = pptRect;
+							//SetWindowPos(thisApp,
+							//	HWND_TOPMOST,
+							//	pptRect.left,
+							//	pptRect.top,
+							//	pptRect.right - pptRect.left,
+							//	pptRect.bottom - pptRect.top,
+							//	SWP_NOACTIVATE);
 							MoveWindow(thisApp, pptRect.left, pptRect.top, pptRect.right - pptRect.left, pptRect.bottom - pptRect.top, 1);//调整软件窗口大小，使其适应ppt放映窗口
 							PostMessage(thisApp, 0x1145, 114514, 0);
+							qDebug() << "Rect:(" << pptRect.left << "," << pptRect.top << "," << pptRect.right - pptRect.left << "," << pptRect.bottom - pptRect.top << ")";
 						}
 					}
-					qDebug() << "Rect:(" << pptRect.left << "," << pptRect.top << "," << pptRect.right - pptRect.left << "," << pptRect.bottom - pptRect.top << ")";
+					//qDebug() << "Rect:(" << pptRect.left << "," << pptRect.top << "," << pptRect.right - pptRect.left << "," << pptRect.bottom - pptRect.top << ")";
 				}
 				//获取指针状态:箭头/画笔/橡皮
 				NowUsingButtonRealTimeCheck = pPowerPointApp->ActivePresentation->SlideShowWindow->View->GetPointerType();
@@ -500,7 +512,7 @@ HRESULT __stdcall EA::Invoke(_In_ DISPID dispIdMember, _In_ REFIID riid, _In_ LC
 
 void pptHelper::setPointer1()
 {
-	std::thread clickBtnsThread(ClickBtnsProc, ClickBtnsMode::Pointer);
+	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::Pointer);
 	clickBtnsThread.detach();
 }
 
@@ -524,7 +536,7 @@ void pptHelper::setPen1()
 			PointerColor1 = selectColorBox->selectedColor();
 		ColorDialog1 = NULL;
 	}
-	std::thread clickBtnsThread(ClickBtnsProc, ClickBtnsMode::Pen);
+	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::Pen);
 	clickBtnsThread.detach();
 }
 void pptHelper::dcCheckProc()//双击检测
@@ -535,7 +547,7 @@ void pptHelper::dcCheckProc()//双击检测
 
 void pptHelper::setEraser1()
 {
-	std::thread clickBtnsThread(ClickBtnsProc, ClickBtnsMode::Eraser);
+	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::Eraser);
 	clickBtnsThread.detach();
 	if (!dbclick[1])
 	{
@@ -547,7 +559,7 @@ void pptHelper::setEraser1()
 	}
 	else
 	{
-		std::thread clickBtnsThread(ClickBtnsProc, ClickBtnsMode::EraseAllDrawing);
+		std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::EraseAllDrawing);
 		clickBtnsThread.detach();
 		return;
 	}
@@ -556,30 +568,49 @@ void pptHelper::setEraser1()
 
 void pptHelper::setMagnifier()
 {
-	exit(0);
+#ifndef _DEBUG
+	QMessageBox::warning(this, UTF8ToANSI("Warning!").c_str(), UTF8ToANSI("请注意！放大镜功能内存占用较大，如非必要请不要保持打开状态。").c_str());
+#endif // !_DEBUG
+
+	QRect thisWindowRect = rect();
+	thisWindowRect.setSize(QSize(thisWindowRect.width() / 2, thisWindowRect.height() / 2));
+	thisWindowRect.moveTo(thisWindowRect.topLeft() + QPoint((rect().width() - thisWindowRect.width()) / 2, (rect().height() - thisWindowRect.height()) / 2));
+	if (!magnifier)
+	{
+		magnifier = new MyMagnifier(this, thisWindowRect);
+		magnifier->show();
+	}
+	else
+	{
+		magnifier->close();
+		magnifier->deleteLater();
+		magnifier = NULL;
+	}
+	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::Magnifier);
+	clickBtnsThread.detach();
 }
 
 void pptHelper::quitSlideShowWindow1()
 {
-	std::thread clickBtnsThread(ClickBtnsProc,ClickBtnsMode::QuitSlideShowWindow);
+	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::QuitSlideShowWindow);
 	clickBtnsThread.detach();
 }
 
 void pptHelper::previousPage1()
 {
-	std::thread clickBtnsThread(ClickBtnsProc, ClickBtnsMode::Previous);
+	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::Previous);
 	clickBtnsThread.detach();
 }
 
 void pptHelper::nextPage1()
 {
-	std::thread clickBtnsThread(ClickBtnsProc, ClickBtnsMode::Next);
+	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::Next);
 	clickBtnsThread.detach();
 }
 
 void pptHelper::setNavigation1()
 {
-	std::thread clickBtnsThread(ClickBtnsProc, ClickBtnsMode::Navigation);
+	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::Navigation);
 	clickBtnsThread.detach();
 
 }
@@ -659,7 +690,7 @@ void pptHelper::foldMenu()
 	}
 }
 
-void ClickBtnsProc(int mode)
+void pptHelper::ClickBtnsProc(ClickBtnsMode mode)
 {
 	CComPtr<_Application> PPTAPP;
 	CComPtr<IUnknown> iunknown1;

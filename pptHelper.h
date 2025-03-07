@@ -18,7 +18,7 @@
 #include <qlabel.h>
 #include <qpropertyanimation.h>
 #include <qfileinfo.h>
-
+#include "Magnifier.h"
 
 //Visual C++
 #import "C:\\Program Files\\Microsoft Office\\Root\\VFS\\ProgramFilesCommonX64\\Microsoft Shared\\OFFICE16\\MSO.DLL"
@@ -31,52 +31,6 @@
 #include <string>
 #include <fstream>
 #include "stringProcess.h"
-void ClickBtnsProc(int mode);
-void getWind();
-enum ClickBtnsMode
-{
-    Pointer,
-    Pen,
-    Eraser,
-    EraseAllDrawing,
-    Magnifier,
-    QuitSlideShowWindow,
-    Previous,
-    Next,
-    Navigation
-};
-
-class pptHelper : public QMainWindow
-{
-    Q_OBJECT
-
-public:
-    pptHelper(QWidget *parent = nullptr);
-    ~pptHelper();
-
-protected:
-    void paintEvent(QPaintEvent* e);
-    bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
-private:
-    Ui::pptHelperClass ui;
-    std::vector<std::vector<std::string>> Config;
-    void moveBars();
-public slots:
-    void setPointer1();
-    void setPen1();
-    void setEraser1();
-    void setMagnifier();
-    void quitSlideShowWindow1();
-    void previousPage1();
-    void nextPage1();
-    void setNavigation1();
-    void setPageNumAndPointerColor();
-    void dcCheckProc();
-    void getPptSlideShowState();
-    void foldMenu();
-};
-
-
 
 class EA : public IDispatch
 {
@@ -174,3 +128,74 @@ private:
 
 //dispid
 //WindowActivate
+
+enum ClickBtnsMode
+{
+    Pointer,
+    Pen,
+    Eraser,
+    EraseAllDrawing,
+    Magnifier,
+    QuitSlideShowWindow,
+    Previous,
+    Next,
+    Navigation
+};
+
+class pptHelper : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    pptHelper(QWidget *parent = nullptr);
+    ~pptHelper();
+    auto getHideAni() const { return HideAni; }
+    auto getShowAni() const { return ShowAni; }
+    bool comInitialProc();
+    void getWind();
+    void ClickBtnsProc(ClickBtnsMode mode);
+
+protected:
+    void paintEvent(QPaintEvent* e);
+    bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
+private:
+    Ui::pptHelperClass ui;
+    std::vector<std::vector<std::string>> Config;
+    void moveBars();
+    MyMagnifier* magnifier = nullptr;
+    QPropertyAnimation* HideAni;
+    QPropertyAnimation* ShowAni;
+    QTimer* GetPptSlideShowStateTimer;
+
+    QRect screenRect;
+    HWND thisApp;//这个应用程序的窗口句柄
+    HWND ColorDialog1 = NULL;//画笔颜色对话框句柄
+    bool dbclick[2] = { false,false };//仅使用dbclick[0]，dbclick[1]暂不使用
+    QColor PointerColor1;//
+    QColor PointerColor2;
+
+    EA eaSink;
+    DWORD dw;
+    HRESULT hr;
+    int pptShowPosition = -1;
+    int pptShowTotalNum = -1;
+    long pptHWND, pptAppHWND;
+
+
+public slots:
+    void setPointer1();
+    void setPen1();
+    void setEraser1();
+    void setMagnifier();
+    void quitSlideShowWindow1();
+    void previousPage1();
+    void nextPage1();
+    void setNavigation1();
+    void setPageNumAndPointerColor();
+    void dcCheckProc();
+    void getPptSlideShowState();
+    void foldMenu();
+};
+
+
+
