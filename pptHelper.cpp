@@ -217,8 +217,7 @@ bool pptHelper::nativeEvent(const QByteArray& eventType, void* message, qintptr*
 	}
 	return QWidget::nativeEvent(eventType,message,result);
 }
-PowerPoint::PpSlideShowPointerType NowUsingButtonDisplay = PowerPoint::PpSlideShowPointerType::ppSlideShowPointerAutoArrow;
-PowerPoint::PpSlideShowPointerType NowUsingButtonRealTimeCheck = PowerPoint::PpSlideShowPointerType::ppSlideShowPointerNone;
+
 void pptHelper::paintEvent(QPaintEvent* e)
 {
 	QPainter p(this);
@@ -568,23 +567,140 @@ void pptHelper::setEraser1()
 
 void pptHelper::setMagnifier()
 {
+	using namespace std;
+	enum MagMode {
+		PowerPointBuildIn,
+		WindowsMagnifier,
+		ScreenShotMagnifier
+	} magMode = MagMode::WindowsMagnifier;
+
+#define SHOWREADFILEERROR() QMessageBox::critical(this, "错误", "ERROR!\n配置文件读取失败！")
+	string tmpFileName = "magnifier.ini";
+	string magConf;
+	fstream InConfigTxt(tmpFileName, ios::out | ios::app);//第一次打开
+	if (!InConfigTxt.is_open())
+		InConfigTxt.open(tmpFileName, ios::out);//失败则创建
+	//分开防止误会代码逻辑
+	if (!InConfigTxt.is_open())
+		SHOWREADFILEERROR();
+	else
+	{
+		InConfigTxt.close();
+		InConfigTxt.open(tmpFileName, ios::in);//读取配置文件
+		getline(InConfigTxt, magConf);//读取第一行
+		InConfigTxt.close();
+		if (magConf != "")
+		{
+			string cfg;
+			for (char c : magConf)
+			{
+				if ((c >= 'a' && c <= 'z')
+					|| (c >= '0' && c <= '9'))//只读取字母和数字
+					cfg += c;
+				else if (c >= 'A' && c <= 'Z')//大写字母转小写
+					cfg += c - 'A' + 'a';
+			}
+			if (cfg == "windowsmagnifier")
+				magMode = MagMode::WindowsMagnifier;
+			else if (cfg == "powerpointbuildin")
+				magMode = MagMode::PowerPointBuildIn;
+			else if (cfg == "screenshotmagnifier")
+				magMode = MagMode::ScreenShotMagnifier;
+			else
+				magConf = "";//配置文件有错，则当做文件为空处理
+		}
+		if (magConf == "")//文件为空
+		{
+			InConfigTxt.open(tmpFileName, ios::out);
+			if (InConfigTxt.is_open())
+			{
+				QMessageBox* msgBox = new QMessageBox(QMessageBox::Icon::NoIcon, "?", "请选择一种放大模式", QMessageBox::NoButton, this);
+				msgBox->addButton("PowerPoint内置放大镜", QMessageBox::YesRole);
+				msgBox->addButton("Windows放大镜", QMessageBox::NoRole);
+				msgBox->setDefaultButton(QMessageBox::StandardButton::No);
+				msgBox->addButton("自制截图放大镜", QMessageBox::ApplyRole);
+				msgBox->exec();
+				if (msgBox->clickedButton() == msgBox->buttons().at(0))
+				{
+					magMode = MagMode::PowerPointBuildIn;
+					InConfigTxt << "PowerPointBuildIn";
+					QMessageBox::information(this, "注意", "此模式下可通过鼠标右键/触摸屏长按幻灯片内容进行复原");
+				}
+				else if (msgBox->clickedButton() == msgBox->buttons().at(1))
+				{
+					magMode = MagMode::WindowsMagnifier;
+					InConfigTxt << "WindowsMagnifier";
+				}
+				else if (msgBox->clickedButton() == msgBox->buttons().at(2))
+				{
+					magMode = MagMode::ScreenShotMagnifier;
+					InConfigTxt << "ScreenShotMagnifier";
+				}
+				else
+					return;
+				InConfigTxt.flush();
+				InConfigTxt.close();
+			}
+		}
+	}
+
+	if (magMode == MagMode::WindowsMagnifier)
+	{
+
 #ifndef _DEBUG
-	QMessageBox::warning(this, UTF8ToANSI("Warning!").c_str(), UTF8ToANSI("请注意！放大镜功能内存占用较大，如非必要请不要保持打开状态。").c_str());
+		QMessageBox::warning(this, UTF8ToANSI("Warning!").c_str(), UTF8ToANSI("请注意！放大镜功能内存占用较大，如非必要请不要保持打开状态。").c_str());
 #endif // !_DEBUG
 
-	QRect thisWindowRect = rect();
-	thisWindowRect.setSize(QSize(thisWindowRect.width() / 2, thisWindowRect.height() / 2));
-	thisWindowRect.moveTo(thisWindowRect.topLeft() + QPoint((rect().width() - thisWindowRect.width()) / 2, (rect().height() - thisWindowRect.height()) / 2));
-	if (!magnifier)
-	{
-		magnifier = new MyMagnifier(this, thisWindowRect);
-		magnifier->show();
+		QRect thisWindowRect = rect();
+		if (thisWindowRect.width() > thisWindowRect.height())
+			thisWindowRect.setSize(QSize(thisWindowRect.height() / 2, thisWindowRect.height() / 2));
+		else
+			thisWindowRect.setSize(QSize(thisWindowRect.width() / 2, thisWindowRect.width() / 2));
+		//相对坐标
+		thisWindowRect.moveTo(thisWindowRect.topLeft() + QPoint((rect().width() - thisWindowRect.width()) / 2, (rect().height() - thisWindowRect.height()) / 2));
+		//对于屏幕的坐标
+		thisWindowRect.moveTo(mapToGlobal(thisWindowRect.topLeft()));
+		if (!magnifier)
+		{
+			magnifier = new MyMagnifier(this, thisWindowRect);
+			magnifier->show();
+		}
+		else
+		{
+			magnifier->close();
+			magnifier->deleteLater();
+			magnifier = NULL;
+		}
 	}
 	else
 	{
-		magnifier->close();
-		magnifier->deleteLater();
-		magnifier = NULL;
+		if (magnifier)
+		{
+			magnifier->close();
+			magnifier->deleteLater();
+			magnifier = NULL;
+		}
+		if (magMode == MagMode::PowerPointBuildIn)
+		{
+			if (pptHWND)
+				SetForegroundWindow((HWND)pptHWND);
+			// 模拟键盘快捷键
+			// 模拟按下 Ctrl + + 放大内容
+			keybd_event(VK_CONTROL, 0, 0, 0); // 按下 Ctrl 键
+			keybd_event(VK_ADD, 0, 0, 0); // 按下 + 键
+			keybd_event(VK_ADD, 0, KEYEVENTF_KEYUP, 0); // 释放 + 键
+			keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0); // 释放 Ctrl 键
+			// 以下做法不可取（SendMessage/PostMessage)
+			//SendMessage((HWND)pptAppHWND, WM_KEYDOWN, VK_CONTROL, VK_CONTROL);
+			//SendMessage((HWND)pptAppHWND, WM_KEYDOWN, VK_ADD, VK_ADD);
+			//SendMessage((HWND)pptAppHWND, WM_KEYUP, VK_ADD, VK_ADD);
+			//SendMessage((HWND)pptAppHWND, WM_KEYUP, VK_CONTROL, VK_CONTROL);
+		}
+		else if (magMode == MagMode::ScreenShotMagnifier)
+		{
+
+		}
+
 	}
 	std::thread clickBtnsThread(&pptHelper::ClickBtnsProc, this, ClickBtnsMode::Magnifier);
 	clickBtnsThread.detach();

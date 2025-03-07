@@ -181,6 +181,8 @@ private:
     int pptShowTotalNum = -1;
     long pptHWND, pptAppHWND;
 
+    PowerPoint::PpSlideShowPointerType NowUsingButtonDisplay = PowerPoint::PpSlideShowPointerType::ppSlideShowPointerAutoArrow;
+    PowerPoint::PpSlideShowPointerType NowUsingButtonRealTimeCheck = PowerPoint::PpSlideShowPointerType::ppSlideShowPointerNone;
 
 public slots:
     void setPointer1();
