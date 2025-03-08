@@ -173,6 +173,23 @@ void pptHelper::moveBars()
 	ui.TurnPageToolBarRightBottom->move(TurnPageToolBarRightBottomPos);
 	//ui.ToolBarBottom->setStyleSheet(".QWidget{border: 1px solid grey;border - radius: 10px;background - color: rgba(244, 255, 220, 100);}QWidget > QPushButton{background - color:transparent;}QWidget > QPushButton:focus{outline: none;}");
 }
+void pptHelper::updateMagnifierState(bool showState)
+{
+	if (showState)
+	{
+		if (windowsMagnifier)
+			windowsMagnifier->show();
+		if (screenShotMagnifier)
+			screenShotMagnifier->show();
+	}
+	else
+	{
+		if (windowsMagnifier)
+			windowsMagnifier->hide();
+		if (screenShotMagnifier)
+			screenShotMagnifier->hide();
+	}
+}
 bool pptHelper::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
 {
 	if (eventType == "windows_generic_MSG") {
@@ -185,8 +202,7 @@ bool pptHelper::nativeEvent(const QByteArray& eventType, void* message, qintptr*
 			//MessageBox(0, "", "", 0);
 			if (msg->wParam == 9876)//隐藏
 			{
-				if (magnifier)
-					magnifier->hide();
+				updateMagnifierState(false);
 				ShowAni->stop();
 				HideAni->setStartValue(ShowAni->currentValue());
 				HideAni->setDuration(msg->lParam);
@@ -198,8 +214,7 @@ bool pptHelper::nativeEvent(const QByteArray& eventType, void* message, qintptr*
 			//MessageBox(0, "", "", 0);
 			if (msg->wParam == 6789)//显示
 			{
-				if (magnifier)
-					magnifier->show();
+				updateMagnifierState(true);
 				HideAni->stop();
 				ShowAni->setStartValue(HideAni->currentValue());
 				show();
@@ -366,6 +381,7 @@ void pptHelper::getWind()
 			//long pptHWND;
 			pPowerPointApp->ActivePresentation->SlideShowWindow->get_HWND(&pptHWND);
 			pPowerPointApp->get_HWND(&pptAppHWND);
+
 			if (dw == NULL)
 			{
 				CComPtr<IConnectionPointContainer> icpc;
@@ -615,21 +631,20 @@ void pptHelper::setMagnifier()
 			if (InConfigTxt.is_open())
 			{
 				QMessageBox* msgBox = new QMessageBox(QMessageBox::Icon::NoIcon, "?", "请选择一种放大模式", QMessageBox::NoButton, this);
-				msgBox->addButton("PowerPoint内置放大镜", QMessageBox::YesRole);
-				msgBox->addButton("Windows放大镜", QMessageBox::NoRole);
-				msgBox->setDefaultButton(QMessageBox::StandardButton::No);
+				msgBox->addButton("Windows放大镜（推荐）", QMessageBox::YesRole);
+				msgBox->addButton("PowerPoint内置放大镜", QMessageBox::NoRole);
 				msgBox->addButton("自制截图放大镜", QMessageBox::ApplyRole);
 				msgBox->exec();
 				if (msgBox->clickedButton() == msgBox->buttons().at(0))
 				{
-					magMode = MagMode::PowerPointBuildIn;
-					InConfigTxt << "PowerPointBuildIn";
-					QMessageBox::information(this, "注意", "此模式下可通过鼠标右键/触摸屏长按幻灯片内容进行复原");
+					magMode = MagMode::WindowsMagnifier;
+					InConfigTxt << "WindowsMagnifier";
 				}
 				else if (msgBox->clickedButton() == msgBox->buttons().at(1))
 				{
-					magMode = MagMode::WindowsMagnifier;
-					InConfigTxt << "WindowsMagnifier";
+					magMode = MagMode::PowerPointBuildIn;
+					InConfigTxt << "PowerPointBuildIn";
+					QMessageBox::information(this, "注意", "此模式下可通过鼠标右键/触摸屏长按幻灯片内容进行复原");
 				}
 				else if (msgBox->clickedButton() == msgBox->buttons().at(2))
 				{
@@ -639,47 +654,51 @@ void pptHelper::setMagnifier()
 				else
 					return;
 				InConfigTxt.flush();
+				InConfigTxt << "\n\n放在第一行的为放大镜默认使用的模式，如果第一行与现有模式不匹配则会弹窗提示选择\n"
+					"目前的模式有：\n"
+					"1.WindowsMagnifier（推荐 / 默认）（Windows自带放大镜，内存占用稍大但好用）\n"
+					"2.PowerPointBuildIn（推荐）（PowerPoint自带，本软件使用模拟键盘快捷键进行ppt放大）\n"
+					"3.ScreenShotMagnifier（不推荐，自制截屏版，功能不完善，全屏情况下存在问题）\n";
+				InConfigTxt.flush();
 				InConfigTxt.close();
 			}
 		}
 	}
 
-	if (magMode == MagMode::WindowsMagnifier)
+	QRect thisWindowRect = rect();
+	if (thisWindowRect.width() > thisWindowRect.height())
+		thisWindowRect.setSize(QSize(thisWindowRect.height() / 2, thisWindowRect.height() / 2));
+	else
+		thisWindowRect.setSize(QSize(thisWindowRect.width() / 2, thisWindowRect.width() / 2));
+	//相对坐标
+	thisWindowRect.moveTo(thisWindowRect.topLeft() + QPoint((rect().width() - thisWindowRect.width()) / 2, (rect().height() - thisWindowRect.height()) / 2));
+	//对于屏幕的坐标
+	thisWindowRect.moveTo(mapToGlobal(thisWindowRect.topLeft()));
+	if (windowsMagnifier)
+	{
+		windowsMagnifier->close();
+		windowsMagnifier->deleteLater();
+		windowsMagnifier = 0;
+	}
+	else if (screenShotMagnifier)
+	{
+		screenShotMagnifier->close();
+		screenShotMagnifier->deleteLater();
+		screenShotMagnifier = 0;
+	}
+	else if (magMode == MagMode::WindowsMagnifier)
 	{
 
 #ifndef _DEBUG
 		QMessageBox::warning(this, UTF8ToANSI("Warning!").c_str(), UTF8ToANSI("请注意！放大镜功能内存占用较大，如非必要请不要保持打开状态。").c_str());
 #endif // !_DEBUG
 
-		QRect thisWindowRect = rect();
-		if (thisWindowRect.width() > thisWindowRect.height())
-			thisWindowRect.setSize(QSize(thisWindowRect.height() / 2, thisWindowRect.height() / 2));
-		else
-			thisWindowRect.setSize(QSize(thisWindowRect.width() / 2, thisWindowRect.width() / 2));
-		//相对坐标
-		thisWindowRect.moveTo(thisWindowRect.topLeft() + QPoint((rect().width() - thisWindowRect.width()) / 2, (rect().height() - thisWindowRect.height()) / 2));
-		//对于屏幕的坐标
-		thisWindowRect.moveTo(mapToGlobal(thisWindowRect.topLeft()));
-		if (!magnifier)
-		{
-			magnifier = new MyMagnifier(this, thisWindowRect);
-			magnifier->show();
-		}
-		else
-		{
-			magnifier->close();
-			magnifier->deleteLater();
-			magnifier = NULL;
-		}
+		windowsMagnifier = new MyWindowsMagnifier(this, thisWindowRect);
+		windowsMagnifier->show();
 	}
 	else
 	{
-		if (magnifier)
-		{
-			magnifier->close();
-			magnifier->deleteLater();
-			magnifier = NULL;
-		}
+
 		if (magMode == MagMode::PowerPointBuildIn)
 		{
 			if (pptHWND)
@@ -698,7 +717,9 @@ void pptHelper::setMagnifier()
 		}
 		else if (magMode == MagMode::ScreenShotMagnifier)
 		{
-
+			// 此方法暂无法完善，原因：Qt自带截图功能无法截获ppt全屏放映的窗口
+			screenShotMagnifier = new ::ScreenShotMagnifier(this, thisWindowRect, pptHWND);
+			screenShotMagnifier->show();
 		}
 
 	}

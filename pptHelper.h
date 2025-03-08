@@ -18,7 +18,9 @@
 #include <qlabel.h>
 #include <qpropertyanimation.h>
 #include <qfileinfo.h>
-#include "Magnifier.h"
+#include <qwindow.h>
+#include "WindowsMagnifier.h"
+#include "ScreenShotMagnifier.h"
 
 //Visual C++
 #import "C:\\Program Files\\Microsoft Office\\Root\\VFS\\ProgramFilesCommonX64\\Microsoft Shared\\OFFICE16\\MSO.DLL"
@@ -162,7 +164,9 @@ private:
     Ui::pptHelperClass ui;
     std::vector<std::vector<std::string>> Config;
     void moveBars();
-    MyMagnifier* magnifier = nullptr;
+    MyWindowsMagnifier* windowsMagnifier = nullptr;
+    ScreenShotMagnifier* screenShotMagnifier = nullptr;
+    void updateMagnifierState(bool showState);
     QPropertyAnimation* HideAni;
     QPropertyAnimation* ShowAni;
     QTimer* GetPptSlideShowStateTimer;

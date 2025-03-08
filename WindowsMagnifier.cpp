@@ -1,4 +1,4 @@
-#include "Magnifier.h"
+#include "WindowsMagnifier.h"
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qevent.h>
@@ -8,7 +8,7 @@
 #include <magnification.h>
 #pragma comment(lib, "Magnification.lib")
 
-MyMagnifier::MyMagnifier(QWidget* parent, QRect geometry)// : QWidget(parent)
+MyWindowsMagnifier::MyWindowsMagnifier(QWidget* parent, QRect geometry)// : QWidget(parent)
 {
 	if (!parent)
 	{
@@ -20,7 +20,7 @@ MyMagnifier::MyMagnifier(QWidget* parent, QRect geometry)// : QWidget(parent)
 	init(geometry, Mode::customize);
 }
 
-MyMagnifier::MyMagnifier(QWidget* parent, Mode mode, QRect geometry) : QWidget(parent)
+MyWindowsMagnifier::MyWindowsMagnifier(QWidget* parent, Mode mode, QRect geometry) : QWidget(parent)
 {
 	if (!parent)
 	{
@@ -33,13 +33,13 @@ MyMagnifier::MyMagnifier(QWidget* parent, Mode mode, QRect geometry) : QWidget(p
 	init(geometry, mode);
 }
 
-MyMagnifier::~MyMagnifier()
+MyWindowsMagnifier::~MyWindowsMagnifier()
 {
 	MagUninitialize();
 
 }
 
-bool MyMagnifier::init(QRect geometry, Mode mode)
+bool MyWindowsMagnifier::init(QRect geometry, Mode mode)
 {
 	if (!_parent)
 	{
@@ -136,7 +136,7 @@ bool MyMagnifier::init(QRect geometry, Mode mode)
 		return false;
 	}
 	QTimer* timer = new QTimer(this);
-	connect(timer, &QTimer::timeout, this, &MyMagnifier::UpdateMagWindow);
+	connect(timer, &QTimer::timeout, this, &MyWindowsMagnifier::UpdateMagWindow);
 	timer->setSingleShot(false);
 	timer->setInterval(0);//刷新率60hz对应的间隔时间为16ms
 	timer->start();
@@ -144,7 +144,7 @@ bool MyMagnifier::init(QRect geometry, Mode mode)
 	return true;
 }
 
-void MyMagnifier::paintEvent(QPaintEvent* e)
+void MyWindowsMagnifier::paintEvent(QPaintEvent* e)
 {
 	QPainter p(this);
 	p.setRenderHint(QPainter::Antialiasing);
@@ -166,7 +166,7 @@ void MyMagnifier::paintEvent(QPaintEvent* e)
 	QWidget::paintEvent(e);
 }
 
-void MyMagnifier::mouseMoveEvent(QMouseEvent* e)
+void MyWindowsMagnifier::mouseMoveEvent(QMouseEvent* e)
 {
 	if (e->buttons() == Qt::MouseButton::NoButton)
 	{
@@ -244,7 +244,7 @@ void MyMagnifier::mouseMoveEvent(QMouseEvent* e)
 }
 
 
-void MyMagnifier::mousePressEvent(QMouseEvent* e)
+void MyWindowsMagnifier::mousePressEvent(QMouseEvent* e)
 {
 	if (e->button() == Qt::LeftButton)
 	{
@@ -279,14 +279,14 @@ void MyMagnifier::mousePressEvent(QMouseEvent* e)
 	QWidget::mousePressEvent(e);
 }
 
-void MyMagnifier::mouseReleaseEvent(QMouseEvent* e)
+void MyWindowsMagnifier::mouseReleaseEvent(QMouseEvent* e)
 {
 	resizeDirection = None;
 	mouseDownOffset = QPoint();
 	QWidget::mouseReleaseEvent(e);
 }
 
-bool MyMagnifier::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
+bool MyWindowsMagnifier::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
 {
 	MSG* msg = (MSG*)message;
 	switch (msg->message)
@@ -331,7 +331,7 @@ bool MyMagnifier::nativeEvent(const QByteArray& eventType, void* message, qintpt
 	return QWidget::nativeEvent(eventType, message, result);
 }
 
-bool MyMagnifier::eventFilter(QObject* watched, QEvent* event)
+bool MyWindowsMagnifier::eventFilter(QObject* watched, QEvent* event)
 {
 	//if ((HWND)((QWidget*)watched)->winId() == hwndHost)
 	//{
@@ -363,7 +363,7 @@ bool MyMagnifier::eventFilter(QObject* watched, QEvent* event)
 	return false;
 }
 
-void MyMagnifier::resizeEvent(QResizeEvent* event)
+void MyWindowsMagnifier::resizeEvent(QResizeEvent* event)
 {
 	
 }
@@ -374,7 +374,7 @@ void MyMagnifier::resizeEvent(QResizeEvent* event)
 //
 // PURPOSE: Sets the source rectangle and updates the window. Called by a timer.
 //
-void MyMagnifier::UpdateMagWindow()
+void MyWindowsMagnifier::UpdateMagWindow()
 {
 	//if (geometryBackup != this->geometry())
 	//{
@@ -420,12 +420,12 @@ void MyMagnifier::UpdateMagWindow()
 	POINT mousePoint = { 0 };
 	switch (mode)
 	{
-	case MyMagnifier::system:
+	case MyWindowsMagnifier::system:
 	{
 		GetCursorPos(&mousePoint);
 	}
 	break;
-	case MyMagnifier::customize:
+	case MyWindowsMagnifier::customize:
 	{
 		RECT thisWindowRect;
 		GetWindowRect((HWND)this->winId(), &thisWindowRect);

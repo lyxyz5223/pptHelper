@@ -64,7 +64,10 @@
     <ClCompile Include="LabelButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Magnifier.cpp">
+    <ClCompile Include="WindowsMagnifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenShotMagnifier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,7 +90,10 @@
     <ClInclude Include="toolBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Magnifier.h">
+    <ClInclude Include="WindowsMagnifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenShotMagnifier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -93,7 +93,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="LabelButton.cpp" />
-    <ClCompile Include="Magnifier.cpp" />
+    <ClCompile Include="ScreenShotMagnifier.cpp" />
+    <ClCompile Include="WindowsMagnifier.cpp" />
     <ClCompile Include="stringProcess.cpp" />
     <ClCompile Include="toolBar.cpp" />
     <QtRcc Include="pptHelper.qrc" />
@@ -113,7 +114,8 @@
     <ClInclude Include="BtBox.h" />
     <ClInclude Include="DoubleClickButton.h" />
     <QtMoc Include="LabelButton.h" />
-    <ClInclude Include="Magnifier.h" />
+    <ClInclude Include="ScreenShotMagnifier.h" />
+    <ClInclude Include="WindowsMagnifier.h" />
     <ClInclude Include="stringProcess.h" />
     <ClInclude Include="toolBar.h" />
     <QtMoc Include="LicenseAndPolicyDialogClass.h" />

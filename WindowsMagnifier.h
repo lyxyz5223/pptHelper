@@ -2,7 +2,7 @@
 #include <qwidget.h>
 #include <qmessagebox.h>
 #include <Windows.h>
-class MyMagnifier :
+class MyWindowsMagnifier :
     public QWidget
 {
 public:
@@ -11,9 +11,9 @@ public:
 		customize
 	};
 
-	MyMagnifier(QWidget* parent, QRect geometry = QRect());//Magnification API要求窗口样式必须包含WS_CHILD，所以这里parent不能为nullptr
-	MyMagnifier(QWidget* parent, Mode mode, QRect geometry = QRect());//Magnification API要求窗口样式必须包含WS_CHILD，所以这里parent不能为nullptr
-	~MyMagnifier();
+	MyWindowsMagnifier(QWidget* parent, QRect geometry = QRect());//Magnification API要求窗口样式必须包含WS_CHILD，所以这里parent不能为nullptr
+	MyWindowsMagnifier(QWidget* parent, Mode mode, QRect geometry = QRect());//Magnification API要求窗口样式必须包含WS_CHILD，所以这里parent不能为nullptr
+	~MyWindowsMagnifier();
 	bool init(QRect geometry, Mode mode);
 public slots:
 	void UpdateMagWindow();
